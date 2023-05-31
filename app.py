@@ -3,14 +3,15 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
+import os
 
 
 app = Flask(__name__)
 env_config = os.getenv("PROD_APP_SETTINGS", "config.DevelopmentConfig")
 app.config.from_object(env_config)
 
+app.secret_key = 'development key'
 
-app.secret_key = 'your secret key'
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -71,6 +72,5 @@ def register():
 	elif request.method == 'POST':
 		msg = 'Please fill out the form !'
 	return render_template('register.html', msg = msg)
-
 if __name__ == '__main__':  
-   app.run()
+      app.run(debug=True)
